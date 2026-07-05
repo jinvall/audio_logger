@@ -1,0 +1,26 @@
+# Gradle
+.gradle/
+build/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Kilo agent config
+.kilo/
+
+# Local properties
+local.properties
+
+# Keystores
+*.jks
+*.keystore
+
+# Android build
+.cxx/
+.externalNativeBuild/
+
+# OS
+.DS_Store
+Thumbs.db

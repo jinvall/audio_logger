@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NoiseTelemetry</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="threshold">Threshold</string>
+    <string name="camera">Camera</string>
+    <string name="settings">Settings</string>
+    <string name="start_audio">Start Audio</string>
+    <string name="stop_audio">Stop Audio</string>
+    <string name="start_camera">Start Camera</string>
+    <string name="stop_camera">Stop Camera</string>
+    <string name="clear_buffers">Clear Buffers</string>
+    <string name="rms_level">RMS Level</string>
+    <string name="threshold_config">Threshold Configuration</string>
+    <string name="trigger_count">Triggers</string>
+    <string name="notes">Notes</string>
+    <string name="overlay_enabled">Enable overlay on images</string>
+    <string name="show_location">Show GPS in overlay</string>
+    <string name="jpeg_quality">JPEG Quality</string>
+    <string name="permission_required">Audio and camera permissions required</string>
+    <string name="noise_event">NOISE EVENT</string>
+    <string name="event_id">Event ID</string>
+</resources>
