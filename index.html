@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>👻 Haunted Bobble Lab</title>
+
+<style>
+    body{
+        background:#000;
+        color:white;
+        font-family:sans-serif;
+        text-align:center;
+        margin:0;
+    }
+    .gallery img{
+        max-width:90%;
+        margin:20px;
+    }
+    #builder{
+        margin-top:60px;
+        border-top:2px solid #333;
+        padding:30px;
+    }
+    #stage{
+        width:340px;
+        height:420px;
+        margin:auto;
+        background:#111;
+        border:2px solid #444;
+        position:relative;
+        overflow:hidden;
+    }
+    .part{
+        position:absolute;
+        cursor:grab;
+        touch-action:none;
+        user-select:none;
+    }
+    .controls{
+        margin-top:20px;
+    }
+    button{
+        padding:10px 14px;
+        margin:5px;
+        font-size:14px;
+    }
+    .parts{
+        margin-top:20px;
+    }
+    .parts img{
+        width:60px;
+        margin:8px;
+        cursor:pointer;
+    }
+    #advertiser{
+        margin-top:60px;
+        padding:40px;
+        border-top:2px solid #333;
+        font-size:18px;
+    }
+    #advertiser a{
+        color:#66ccff;
+        text-decoration:none;
+        font-weight:bold;
+    }
+</style>
+</head>
+
+<body>
+
+<h1>👻 Haunted House 👻</h1>
+
+<div class="gallery">
+    <img src="1.png">
+    <img src="2.png">
+    <img src="3.png">
+</div>
+
+<div id="builder">
+    <h2>👻 Haunted Bobble Lab</h2>
+
+    <div id="stage">
+
+        <!-- 8 draggable parts -->
+        <img id="head" class="part" src="head1.png" style="top:60px;left:130px;width:80px">
+        <img id="torso" class="part" src="torso1.png" style="top:150px;left:130px;width:90px">
+
+        <img id="leftArm" class="part" src="leftarm1.png" style="top:160px;left:80px;width:60px">
+        <img id="rightArm" class="part" src="rightarm1.png" style="top:160px;left:210px;width:60px">
+
+        <img id="leftLeg" class="part" src="leftleg1.png" style="top:250px;left:120px;width:60px">
+        <img id="rightLeg" class="part" src="rightleg1.png" style="top:250px;left:170px;width:60px">
+
+        <img id="acc1" class="part" src="acc1.png" style="top:40px;left:200px;width:60px">
+        <img id="acc2" class="part" src="acc2.png" style="top:40px;left:80px;width:60px">
+
+    </div>
+
+    <div class="controls">
+        <button onclick="wobble()">Bobble!</button>
+        <button onclick="spin()">Spin</button>
+        <button onclick="exportPNG()">Save Creation</button>
+    </div>
+
+    <div class="parts">
+        <h3>Heads</h3>
+        <img src="head1.png" onclick="setPart('head', this.src)">
+        <img src="head2.png" onclick="setPart('head', this.src)">
+        <img src="head3.png" onclick="setPart('head', this.src)">
+
+        <h3>Torsos</h3>
+        <img src="torso1.png" onclick="setPart('torso', this.src)">
+        <img src="torso2.png" onclick="setPart('torso', this.src)">
+
+        <h3>Arms</h3>
+        <img src="leftarm1.png" onclick="setPart('leftArm', this.src)">
+        <img src="rightarm1.png" onclick="setPart('rightArm', this.src)">
+
+        <h3>Legs</h3>
+        <img src="leftleg1.png" onclick="setPart('leftLeg', this.src)">
+        <img src="rightleg1.png" onclick="setPart('rightLeg', this.src)">
+
+        <h3>Accessories</h3>
+        <img src="acc1.png" onclick="setPart('acc1', this.src)">
+        <img src="acc2.png" onclick="setPart('acc2', this.src)">
+    </div>
+</div>
+
+<!-- Advertiser Section -->
+<div id="advertiser">
+    👻 Sponsored by  
+    <br><br>
+    <a href="https://jinvall.github.io/Ghosts/" target="_blank">
+        Haunted Ghosts — Visit the Official Page
+    </a>
+</div>
+
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+<script>
+function setPart(id, src){
+    document.getElementById(id).src = src;
+}
+
+function wobble(){
+    let h=document.getElementById("head");
+    h.animate([
+        {transform:'rotate(-14deg)'},
+        {transform:'rotate(14deg)'},
+        {transform:'rotate(-10deg)'},
+        {transform:'rotate(10deg)'},
+        {transform:'rotate(0deg)'}
+    ],{duration:1200});
+}
+
+function spin(){
+    stage.animate([
+        {transform:'rotate(0deg)'},
+        {transform:'rotate(360deg)'}
+    ],{duration:1200});
+}
+
+function exportPNG(){
+    html2canvas(stage).then(canvas=>{
+        let link=document.createElement("a");
+        link.download="bobble.png";
+        link.href=canvas.toDataURL();
+        link.click();
+    });
+}
+
+let stage=document.getElementById("stage");
+let parts=document.querySelectorAll(".part");
+let drag=null, offsetX=0, offsetY=0;
+
+parts.forEach(p=>{
+    p.onpointerdown=startDrag;
+});
+
+function startDrag(e){
+    drag=e.target;
+    offsetX=e.offsetX;
+    offsetY=e.offsetY;
+    document.onpointermove=move;
+    document.onpointerup=stop;
+}
+
+function move(e){
+    if(!drag)return;
+    let rect=stage.getBoundingClientRect();
+    drag.style.left=(e.clientX-rect.left-offsetX)+"px";
+    drag.style.top=(e.clientY-rect.top-offsetY)+"px";
+}
+
+function stop(){
+    drag=null;
+    document.onpointermove=null;
+}
+</script>
+
+</body>
+</html>
